@@ -1,0 +1,316 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="SQL_Test_Project.Admin" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- Quick Script practice -->
+    <script language="C#" runat="server"> 
+    /*
+    void LinkButton_Click(Object sender, EventArgs e) 
+    {
+        Label1.Text="You clicked the link button";
+    }*/
+    
+    </script>
+
+    <script type="text/javascript">
+<!--
+    //accepts 2 parameters: the form number and element number (rememeber that these are zero based arrays)
+    function setFocus(formNum, elementNum) {
+        if (document.forms.length > 0) {
+            document.forms[formNum].elements[elementNum].focus()
+        }
+        }
+
+        // this seems to work, but not enough to pass variables in real-time
+        function getStringVar(varID) {
+            document.getElementById("myDataID").innerHTML = varID;
+        }
+//-->
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+
+    </asp:ContentPlaceHolder>
+</head>
+
+
+<body id="page-top" onload="setFocus(0,2)">
+    <form id="form" runat="server">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- LOGO 2 -->            
+            <ItemTemplate style="text-align:center">  
+                <asp:ImageButton ID="ibtnLogo2" runat="server" style="width:65px;height:65px;text-align:center" ImageUrl="~/images/fia-organization-international_alpha_white_small.png" CausesValidation="false" CommandName="Logo2Click" />
+            </ItemTemplate> 
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="dashboard.aspx">
+                <i class="fas fa-fw fa-university"></i>
+                <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Nav Item - Add Event -->
+            <li class="nav-item">
+                <a class="nav-link" href="addevent.aspx">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Adding an event</span></a>
+            </li>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- LOGO -->
+                    <span style="text-align:center">
+                        <img src="../images/Logo.png" style="width:100px;height:80px;padding-top:20px;padding-bottom:20px" />
+                    </span>
+
+                    <asp:Label ID="myDataID" runat="server" Text="myDataID.ConsoleString"></asp:Label>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Administrator</span>
+                                <!--<img class="img-profile rounded-circle" src="../img/undraw_profile.svg"> -->
+                                <img class="img-profile rounded-circle" src="../images/profile.png">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Sign out
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <asp:ContentPlaceHolder ID="datacontent" runat="server">
+
+                    </asp:ContentPlaceHolder>
+                </div>
+                <!-- /.container-fluid -->
+
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-dark">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto text-white">
+                        <span>
+                        Copyright &copy 2022
+                        <a class="text-white" href="https://ee.linkedin.com/in/ravel-tammeleht-573860150">Ravel Tammeleht</a>.
+                        </span> All rights reserved.
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Are you ready to leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Sign out" below when you're ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <!-- <a class="btn btn-primary" href="signin.aspx">Logout</a>-->
+                    <a class="btn btn-primary" href="../index.aspx">Sign out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Participant Modal-->
+    <div class="modal fade" id="participantModal" tabindex="-1" role="dialog" aria-labelledby="participantModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="participantModalLabel">Attendee info</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <table class="table" style="width:100%;text-align:left">
+                        <tr style="height:20px">
+                            <td class="fcol" id="lblFName" runat="server">
+                                First name:
+                            </td>
+                            <td class="scol">
+                                <asp:TextBox ID="txtParticipantNameModal" class="form-control" style="width:270px;height:34px" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr style="height:20px">
+                            <td class="fcol" id="lblLName" runat="server">
+                                Surname:
+                            </td>
+                            <td class="scol">
+                                <asp:TextBox ID="txtParticipantLastnameModal" class="form-control" style="width:270px;height:34px" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr style="height:20px">
+                            <td class="fcol" id="lblIDCODE" runat="server">
+                                Personal code:
+                            </td>
+                            <td class="scol">
+                                <!-- <input type="text" class="form-control" style="width:270px;height:34px" id="inpIDCODE" runat="server" placeholder="37810014944" /> -->
+                                <asp:TextBox ID="txtParticipantIDCODEModal" class="form-control" style="width:270px;height:34px" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr style="height:20px">
+                            <td class="fcol" id="lblPayment" runat="server">
+                                Payment method:
+                            </td>
+                            <td class="scol">
+                                <asp:DropDownList ID="paymentType" CssClass="form-control" runat="server" AutoPostBack="true" style="width:270px;height:34px">
+                                    <asp:ListItem>Cash</asp:ListItem>
+                                    <asp:ListItem>With a card</asp:ListItem>
+                                </asp:DropDownList>
+                            </td>
+                        </tr>
+                        <tr style="height:20px">
+                            <td class="fcol" id="lblInfo" runat="server">
+                                Additional information:
+                            </td>
+                            <td class="scol">
+                                <asp:TextBox ID="txtParticipantInfoModal" class="form-control" style="width:270px;height:102px" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <!-- <a class="btn btn-primary" href="signin.aspx">Logout</a>-->
+	                <asp:Button ID="btnSave" class="btn btn-primary" Text="Save" runat="server" CommandArgument="SaveArg" CommandName="Save" OnClick="btnSave_Click" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete entry!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Select "Delete" below if you agree to delete the selected entry. The operation cannot be undone.
+
+                </div>
+                <div class="modal-footer">
+	                <asp:Button ID="btnCancel" class="btn btn-secondary" Text="Cancel" runat="server" CommandArgument="CancelArg" CommandName="Cancel" OnClick="btnCancel_Click" data-dismiss="modal" />
+	                <asp:Button ID="btnDelete" class="btn btn-primary" Text="Delete" runat="server" CommandArgument="DeleteArg" CommandName="Delete" OnClick="btnDelete_Click" />
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+
+    <asp:ContentPlaceHolder ID="scriptcontent" runat="server">
+
+    </asp:ContentPlaceHolder>
+
+    </form>
+
+</body>
+
+</html>
+

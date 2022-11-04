@@ -1,0 +1,121 @@
+1.0.0 MicrosoftSQL Server Management Studio
+1.1.0 Connect
+1.2.0 Object Explorer RightClick: Databases>New Database>Database Name = SQL_Test_DB
+1.3.0 New Querry
+1.4.0 "SQL Script" (Create Dables)
+1.4.1 CREATE Table Participant
+1.4.2 CREATE Table ParticipantEvents
+1.4.3 CREATE Table Company
+1.4.4 CREATE Table ThisEvent
+1.5.0 "SQL Script" (Add Sample Data)
+1.5.1 INSERT Participant Data
+1.5.2 INSERT Company Data
+1.5.3 INSERT ParticipantEvents Data
+1.5.4 INSERT ThisEvent Data
+1.6.0 Confirm Data Procedure
+1.6.1 Ctrl + Shift + R (Refresh MicrosoftSQL SMS)
+1.6.2 Display Data with SELECT command to confirm
+
+2.0.0 Microsoft Visual Studio
+2.1.0 Create a new project or Continue without code (must create project withing the ide)
+2.1.1 File>New>Project (Ctrl + Shift + N)
+2.1.2 ASP.NET Web Application (.NET Framework) version .NET Framework 4.6.1
+2.1.3 Name = SQL_Test_Project
+2.1.4 Location = D:\work\Source
+2.1.5 Framework = .NET Framework 4.6.1
+2.1.6 Create
+2.1.7 Template = Empty
+2.1.8 Create
+2.2.0 Solution Explorer RightClick: SQL_Test_Project>Add>New Item (Ctrl + Shift + A)
+2.2.1 Select Installed>Visual C#>Web>Web Form
+2.2.2 Name = SQL_Test_Form.aspx
+2.2.3 Add
+2.3.0 Between <div> & </div> add panel controll
+2.3.1 Open Toolbox
+2.3.2 Select Standard>Panel
+2.3.3 SQL_Test_Form.aspx document RightClick: View Code
+2.3.4 SQL_Test_Form.aspx.cs Add namespaces using System.Data;
+2.3.5 SQL_Test_Form.aspx.cs Add namespaces using System.Data.Client;
+2.3.6 SQL_Test_Form.aspx.cs Add namespaces using System.Configuration;
+2.3.6 SQL_Test_Form.aspx.cs Add namespaces using System.Text;
+2.4.0 Add Data Source Connection
+2.4.1 View>ServerExplorer (Ctrl + Alt + S)
+2.4.2 Server Explorer RightClick: Data Connections>Add Connection...
+2.4.3 Chose Data Source: Microsoft SQL Server
+2.4.4 Data Source: Microsoft SQL Server (SqlClient)
+2.4.5 Server name: (this-pc-name)\SQLEXPRESS
+
+In case you are having issues proceed with the following:
+To Copy the Database you must first stop the SQL services!
+Database location:
+path = C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA
+file = SQL_Test_DB
+
+If firewall is enabled on the server, you need to put sqlbrowser.exe and/or UDP port 1434 into exception.
+Open CMD as Administrator
+Run Command: netsh advfirewall firewall add rule name = SQLPort dir = in protocol = tcp action = allow localport = 1433 remoteip = localsubnet profile = DOMAIN
+
+1) Check SQL Server Service Running in Computer Management (RighClick: My Computer>Manage & chose Services and Applications)
+2) Enable or Restart SQL Server Browser and SQL Server (Startup type: Eutomatic, click Start)
+3) Check Sql Server Configuration Manager if the services are running and TCP/IP atributes to be enabled
+4) Restart SQL Server and Browser services if you made any changes
+5) Check firewall rules. Inbound Rules>SQLPort>Advanced Enable Profiles: Domain, Private, Public and Set default port to 1433
+6) Check remote connections with Microsoft SQL Server. Object Explorer RightClick: ~Root>Properties>Connections
+7) Solve Error in Microsoft Visual Studio>Tools>Options>Database Tools>Data Connections>SQL Server Instance Name
+8) Assign the name as instance name. So in case of DESKTOP-1234567\SQLEXPRESS or (LocalDB)\SQLEXPRESS (it must mach with Microsoft SQL Server Management server name) just use SQLEXPRESS
+
+2.4.6 Connect to a database. Select or enter a database name, select SQL_Test_DB
+2.4.7 Test Connection, OK, OK
+2.5.0 Copy connection source.
+2.5.1 Server Explorer RightClick: (this-pc-name)\sqlexpress.SQL_Test_DB.dbo>Properties
+2.5.2 Copy connection source from Connection>Connection String
+2.5.3 Open Solution Explorer, SQL_Test_Project>Web.config 
+2.5.4 Modify the file under <configuration> and paste the connection source. Example:
+  <connectionStrings>
+    <add name="ThisConnection" connectionString="Data Source=DESKTOP-A00B000\SQLEXPRESS;Initial Catalog=SQL_Test_DB;Integrated Security=True" providerName="System.Data.SqlClient"/>
+  </connectionStrings>
+2.6.0 Navigate back to SQL_Test_Form.aspx.cs
+2.6.1 At Page_Load add:
+            if(!Page.IsPostBack)
+            {
+                string mainconn = ConfigurationManager.ConnectionStrings["ThisConnection"].ConnectionString;
+                SqlConnection sqlconn = new SqlConnection(mainconn);
+                string sqlquery = "select * from [dbo].[Participant]";
+                SqlCommand sqlcmd = new SqlCommand(sqlquery, sqlconn);
+                sqlconn.Open();
+                SqlDataAdapter sda = new SqlDataAdapter(sqlcmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                StringBuilder sb = new StringBuilder();
+                sb.Append("<left>");
+                sb.Append("<h1>Bind Data from Database to HTML Table</h1>");
+                sb.Append("<h2>Using StringBuilder Class</h2>");
+                sb.Append("<hr/>");
+                sb.Append("<table border=1>"); // Create a table with border
+                sb.Append("<tr>"); // Add table row
+                foreach(DataColumn dc in dt.Columns)
+                {
+                    sb.Append("<th>"); // Add table header
+                    sb.Append(dc.ColumnName);
+                    sb.Append("</th>"); // Close table header
+                }
+                sb.Append("</tr>"); // Close table row
+                
+                foreach(DataRow dr in dt.Rows)
+                {
+                    sb.Append("<tr>");
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+                        sb.Append("<th>"); // Add table header
+                        sb.Append(dr[dc.ColumnName].ToString());
+                        sb.Append("</th>"); // Close table header
+                    }
+                    sb.Append("</tr>");
+                }
+                sb.Append("</table>");
+                sb.Append("</left>");
+                Panel1.Controls.Add(new Label { Text = sb.ToString()});
+                sqlconn.Close();
+            }
+
+2.7.0 Done with basic SQL data binding to HTML Table
